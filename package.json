@@ -1,0 +1,26 @@
+{
+  "name": "memory-game",
+  "version": "1.0.0",
+  "description": "Shinkei-suijaku",
+  "main": "main.js",
+  "scripts": {
+    "start": "node ./node_modules/live-server/live-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rbtree/rbt-candidate-nikolapavlovic.git"
+  },
+  "author": "mugen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rbtree/rbt-candidate-nikolapavlovic/issues"
+  },
+  "homepage": "https://github.com/rbtree/rbt-candidate-nikolapavlovic#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}
