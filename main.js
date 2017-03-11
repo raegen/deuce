@@ -1,40 +1,49 @@
-(function (config) {
-    var defaults = {
-        difficulty: {
-            0: '4x4',
-            1: '6x6',
-            2: '8x8'
-        }
-    };
+(function () {
+    var rq;
 
-    if (!config) {
-        config = {};
-    }
-    config.difficulty = config.difficulty || defaults.difficulty;
-
-    function App(element) {
-        var router;
-
-        if (!element) {
+    function init(config) {
+        if (!config) {
             return;
         }
 
-        this.element = element;
+        function App(element) {
+            var router;
 
-        router = Router(Array.prototype.reduce.call(element.querySelectorAll('[data-route]'),
-            function (acc, curr) {
-                acc[curr.dataset.route] = this.show.bind(this, curr);
+            if (!element) {
+                return;
+            }
 
-                return acc;
-            }.bind(this), {}
-        ));
-        router.init('start');
+            this.element = element;
+
+            router = Router(Array.prototype.reduce.call(element.querySelectorAll('[data-route]'),
+                function (acc, curr) {
+                    acc[curr.dataset.route] = this.show.bind(this, curr);
+
+                    return acc;
+                }.bind(this), {}
+            ));
+            router.init('start');
+        }
+
+        App.prototype.show = function (page) {
+            this.element.innerHTML = '';
+            this.element.appendChild(page);
+        };
+
+        function Card(symbol) {
+            Object.defineProperty(this, 'symbol', {value: symbol});
+            this.face = 0;
+        }
+
+        new App(document.getElementById('app'));
     }
 
-    App.prototype.show = function (page) {
-        this.element.innerHTML = '';
-        this.element.appendChild(page);
+    rq = new XMLHttpRequest();
+    rq.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            init(JSON.parse(this.responseText));
+        }
     };
-
-    new App(document.getElementById('app'));
+    rq.open("GET", "config.json");
+    rq.send();
 }());
