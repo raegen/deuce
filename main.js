@@ -1,5 +1,5 @@
 (function () {
-    var oReq;
+    var oReq, runner;
 
     function init(config) {
         function App(element) {
@@ -20,7 +20,7 @@
                 }.bind(this), {}
             ));
 
-            form.onsubmit = function() {
+            form.onsubmit = function () {
                 window.location.hash = form.getAttribute('action');
                 return false;
             };
@@ -36,13 +36,13 @@
             });
 
             router.on('/game/:username/:difficulty', function (username, difficulty) {
-                var deck = Deck.deal(difficulty, 2),
-                    grid = document.getElementById('grid');
+                var grid = document.getElementById('grid'),
+                    game = new Game(difficulty);
 
                 grid.innerHTML = '';
-                grid.classList.add('cols--' + Math.sqrt(deck.length));
+                grid.classList.add('cols--' + Math.sqrt(game.hidden.length));
 
-                deck.forEach(
+                game.hidden.forEach(
                     function (card) {
                         grid.appendChild(CardComponent(card));
                     }
@@ -91,6 +91,35 @@
 
             return deck;
         };
+
+        function Game(difficulty) {
+            this.difficulty = difficulty;
+            this.duration = 0;
+            this.moves = 0;
+            this.hidden = Deck.deal(difficulty, 2);
+            this.revealed = new Deck();
+        }
+
+        //tick duration while game is active
+        Object.defineProperty(Game.prototype, 'active',
+            {
+                get: function() {
+                    return !!runner;
+                },
+                set: function (active) {
+                    var add = function() {
+                        this.duration += 1;
+                    };
+
+                    if (active) {
+                        runner = setInterval(add.bind(this), 1000)
+                    } else {
+                        clearInterval(runner);
+                        runner = null;
+                    }
+                }
+            }
+        );
 
         //card element with access to corresponding Card instance
         function CardComponent(card) {
