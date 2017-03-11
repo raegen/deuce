@@ -7,3 +7,28 @@ i#app-icon {
     width: 72px;
     text-align: center;
 }
+
+.card-component > .mdl-card {
+    width: auto;
+    min-height: 0;
+    height: 100%;
+}
+
+div#grid {
+    width: calc(100vh - 146px);
+    height: calc(100vh - 146px);
+    max-height: calc(100vw - 146px);
+    max-width: calc(100vw - 146px);
+}
+
+div#grid.cols--4 > .card-component {
+    width: calc(100%/4 - 16px);
+}
+
+div#grid.cols--6 > .card-component {
+    width: calc(100%/6 - 16px);
+}
+
+div#grid.cols--8 > .card-component {
+    width: calc(100%/8 - 16px);
+}

@@ -3,7 +3,7 @@
 
     function init(config) {
         function App(element) {
-            var router;
+            var router, form = document.getElementById('form');
 
             if (!element) {
                 return;
@@ -19,6 +19,36 @@
                     return acc;
                 }.bind(this), {}
             ));
+
+            form.onsubmit = function() {
+                window.location.hash = form.getAttribute('action');
+                return false;
+            };
+
+            router.on('once', '/start', function () {
+                var username = document.querySelector('[name=username]'),
+                    difficulty;
+
+                form.addEventListener('change', function () {
+                    difficulty = document.querySelector('[name=difficulty]:checked');
+                    form.action = '#game/' + username.value + '/' + difficulty.value;
+                });
+            });
+
+            router.on('/game/:username/:difficulty', function (username, difficulty) {
+                var deck = Deck.deal(difficulty, 2),
+                    grid = document.getElementById('grid');
+
+                grid.innerHTML = '';
+                grid.classList.add('cols--' + Math.sqrt(deck.length));
+
+                deck.forEach(
+                    function (card) {
+                        grid.appendChild(CardComponent(card));
+                    }
+                );
+            });
+
             router.init('start');
         }
 
@@ -35,7 +65,6 @@
                     return config.symbols[symbol];
                 }
             });
-            this.face = 0;
         }
 
         function Deck() {
@@ -62,6 +91,19 @@
 
             return deck;
         };
+
+        //card element with access to corresponding Card instance
+        function CardComponent(card) {
+            var element = document.createElement('div'),
+                paper = document.createElement('div');
+
+            element.className = 'card-component mdl-cell';
+
+            paper.className = 'mdl-card mdl-shadow--2dp';
+            element.appendChild(paper);
+
+            return element;
+        }
 
         //instantiate the pager class
         new App(document.getElementById('app'));
