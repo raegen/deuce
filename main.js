@@ -1,5 +1,9 @@
 (function () {
-    var oReq, runner;
+    var oReq, runner, state = {
+        username: null,
+        current: null,
+        store: []
+    };
 
     function init(config) {
         function App(element) {
@@ -36,17 +40,21 @@
             });
 
             router.on('/game/:username/:difficulty', function (username, difficulty) {
-                var grid = document.getElementById('grid'),
-                    game = new Game(difficulty);
+                var grid = document.getElementById('grid');
+
+                state.username = username;
+                state.current = new Game(difficulty);
 
                 grid.innerHTML = '';
-                grid.classList.add('cols--' + Math.sqrt(game.hidden.length));
+                grid.classList.add('cols--' + Math.sqrt(state.current.hidden.length));
 
-                game.hidden.forEach(
+                state.current.hidden.forEach(
                     function (card) {
                         grid.appendChild(CardComponent(card));
                     }
                 );
+
+                state.current.active = true;
             });
 
             router.init('start');
@@ -103,11 +111,11 @@
         //tick duration while game is active
         Object.defineProperty(Game.prototype, 'active',
             {
-                get: function() {
+                get: function () {
                     return !!runner;
                 },
                 set: function (active) {
-                    var add = function() {
+                    var add = function () {
                         this.duration += 1;
                     };
 
