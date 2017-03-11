@@ -1,4 +1,17 @@
-(function () {
+(function (config) {
+    var defaults = {
+        difficulty: {
+            0: '4x4',
+            1: '6x6',
+            2: '8x8'
+        }
+    };
+
+    if (!config) {
+        config = {};
+    }
+    config.difficulty = config.difficulty || defaults.difficulty;
+
     function App(element) {
         var router;
 

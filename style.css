@@ -1,0 +1,9 @@
+i#app-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 56px;
+    line-height: 56px;
+    width: 72px;
+    text-align: center;
+}
