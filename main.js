@@ -229,6 +229,7 @@
             if (!state.current.hidden.length) {
                 //game completed
                 state.current.active = false;
+                window.location.hash = 'results';
             }
         };
 
