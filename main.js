@@ -2,6 +2,7 @@
     var oReq, runner, state = {
         username: null,
         current: null,
+        selected: null,
         store: []
     };
 
@@ -46,11 +47,11 @@
                 state.current = new Game(difficulty);
 
                 grid.innerHTML = '';
-                grid.classList.add('cols--' + Math.sqrt(state.current.hidden.length));
+                grid.setAttribute('cols', Math.sqrt(state.current.hidden.length));
 
                 state.current.hidden.forEach(
                     function (card) {
-                        grid.appendChild(CardComponent(card));
+                        grid.appendChild(new CardComponent(card).element);
                     }
                 );
 
@@ -68,12 +69,12 @@
         };
 
         function Card(symbol) {
-            Object.defineProperty(this, 'symbol', {
-                get: function () {
-                    return config.symbols[symbol];
-                }
-            });
+            Object.defineProperty(this, 'symbol', {value: symbol});
         }
+
+        Card.prototype.same = function (card) {
+            return this.symbol === card.symbol;
+        };
 
         function Deck() {
         }
@@ -91,13 +92,38 @@
                         return card.symbol === symbol;
                     })) {
                     //get a new symbol from the pool if that's the case
-                    symbol = symbols.splice([Math.floor(Math.random() * symbols.length - 1)], 1)[0];
+                    symbol = symbols.splice([Math.floor(Math.random() * (symbols.length - 1))], 1)[0];
                 }
 
                 deck.push(new Card(symbol));
             }
 
+            deck.shuffle();
+
             return deck;
+        };
+
+        //shuffle the array elements
+        Deck.prototype.shuffle = function () {
+            var counter = this.length,
+                index,
+                store;
+
+            while (counter--) {
+                index = Math.floor(Math.random() * counter);
+
+                store = this[counter];
+                this[counter] = this[index];
+                this[index] = store;
+            }
+        };
+
+        Deck.prototype.give = function (deck, filter) {
+            this.filter(filter).forEach(
+                function (element) {
+                    deck.push(this.splice(this.indexOf(element), 1));
+                }.bind(this)
+            )
         };
 
         function Game(difficulty) {
@@ -131,16 +157,66 @@
 
         //card element with access to corresponding Card instance
         function CardComponent(card) {
-            var element = document.createElement('div'),
-                paper = document.createElement('div');
+            var symbol = document.createElement('div'),
+                back = document.createElement('div'),
+                front = document.createElement('div'),
+                logo = document.createElement('i');
 
-            element.className = 'card-component mdl-cell';
+            this.element = document.createElement('div');
+            this.element.className = 'card-component mdl-cell';
 
-            paper.className = 'mdl-card mdl-shadow--2dp';
-            element.appendChild(paper);
+            this.card = card;
 
-            return element;
+            symbol.className = 'card-symbol';
+            symbol.innerText = config.symbols[card.symbol];
+
+            logo.className = 'material-icons card-logo';
+            logo.innerText = 'fingerprint';
+
+            back.className = 'card-back mdl-card mdl-shadow--2dp';
+            front.className = 'card-front mdl-card mdl-shadow--2dp';
+
+            this.element.appendChild(front);
+            this.element.appendChild(back);
+
+            back.appendChild(symbol);
+            front.appendChild(logo);
+
+            this.element.addEventListener('click', this.reveal.bind(this));
         }
+
+        //flips a card, thus revealing it
+        CardComponent.prototype.reveal = function () {
+            var revealed = document.querySelectorAll('.flipped:not(.matched)');
+
+            this.element.classList.add('flipped');
+
+            if (revealed.length === 2) {
+                revealed.forEach(
+                    function (card) {
+                        card.classList.remove('flipped');
+                    }
+                );
+            } else if (revealed.length === 1 && state.selected.same(this.card) && state.selected !== this.card) {
+                state.current.hidden.give(state.current.revealed, function (hidden) {
+                    return hidden.symbol === this.card.symbol;
+                }.bind(this));
+
+                [revealed[0], this.element].forEach(
+                    function (card) {
+                        card.classList.add('matched');
+                    }
+                )
+            }
+
+            state.selected = this.card;
+            state.current.moves += 1;
+
+            if (!state.current.hidden.length) {
+                //game completed
+                state.current.active = false;
+            }
+        };
 
         //instantiate the pager class
         new App(document.getElementById('app'));
