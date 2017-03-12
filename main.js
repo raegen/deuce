@@ -41,10 +41,20 @@
             });
 
             router.on('/game/:username/:difficulty', function (username, difficulty) {
-                var grid = document.getElementById('grid');
+                var grid = document.getElementById('grid'),
+                    stats = {
+                        difficulty: document.getElementById('stats-difficulty'),
+                        duration: document.getElementById('stats-duration'),
+                        moves: document.getElementById('stats-moves')
+                    };
 
                 state.username = username;
                 state.current = new Game(difficulty);
+                state.current.onUpdate = function() {
+                    stats.difficulty.innerText = config.difficulty[this.difficulty];
+                    stats.duration.innerText = moment.duration(this.duration, 'seconds').format('hh:mm:ss', { trim: false });
+                    stats.moves.innerText = this.moves;
+                };
 
                 grid.innerHTML = '';
                 grid.setAttribute('cols', Math.sqrt(state.current.hidden.length));
@@ -88,14 +98,14 @@
 
             while (n--) {
                 //check if last ${recurrence} cards have the same symbol
-                if (!symbol || deck.length >= recurrence && deck.slice(-recurrence).every(function (card) {
+                if (symbol === undefined || deck.length >= recurrence && deck.slice(-recurrence).every(function (card) {
                         return card.symbol === symbol;
                     })) {
                     //get a new symbol from the pool if that's the case
                     symbol = symbols.splice([Math.floor(Math.random() * (symbols.length - 1))], 1)[0];
                 }
 
-                deck.push(new Card(symbol));
+                 deck.push(new Card(symbol));
             }
 
             deck.shuffle();
@@ -134,6 +144,9 @@
             this.revealed = new Deck();
         }
 
+        Game.prototype.onUpdate = function () {
+        };
+
         //tick duration while game is active
         Object.defineProperty(Game.prototype, 'active',
             {
@@ -141,12 +154,13 @@
                     return !!runner;
                 },
                 set: function (active) {
-                    var add = function () {
+                    var update = function () {
                         this.duration += 1;
+                        this.onUpdate.call(this);
                     };
 
                     if (active) {
-                        runner = setInterval(add.bind(this), 1000)
+                        runner = setInterval(update.bind(this), 1000)
                     } else {
                         clearInterval(runner);
                         runner = null;
@@ -220,6 +234,11 @@
 
         //instantiate the pager class
         new App(document.getElementById('app'));
+        setTimeout(
+            function () {
+                document.body.classList.remove('loading');
+            }, 500
+        )
     }
 
     //get config

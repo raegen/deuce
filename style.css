@@ -1,10 +1,31 @@
+#loading {
+    display: none;
+}
+
+.loading #loading, #loading > div {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: white;
+    z-index: 10;
+}
+
+#loading > div {
+    margin: auto;
+    height: 50px;
+    width: 50px;
+}
+
 i#app-icon {
     position: absolute;
     left: 0;
     top: 0;
-    height: 56px;
-    line-height: 56px;
-    width: 72px;
+    height: 64px;
+    line-height: 64px;
+    width: 80px;
     text-align: center;
 }
 
@@ -32,6 +53,10 @@ i#app-icon {
     -o-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
     transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
     cursor: pointer;
+}
+
+.card-component.flipped {
+    pointer-events: none;
 }
 
 .card-component.flipped:after {
@@ -93,7 +118,7 @@ i#app-icon {
     animation: flip-up ease-in-out .5s reverse forwards;
 }
 
-.mdl-card {
+.card-component > .mdl-card {
     width: auto;
     min-height: 0;
     cursor: pointer;
@@ -118,7 +143,7 @@ i#app-icon {
 }
 
 .card-symbol, .card-logo {
-    font-size: 40px;
+    font-size: 3em;
     position: absolute;
     top: 0;
     left: 0;
@@ -129,8 +154,8 @@ i#app-icon {
 }
 
 .card-logo {
-    height: 40px;
-    width: 40px;
+    height: 1em;
+    width: 1em;
     color: #a3a3a3;
 }
 
@@ -151,10 +176,10 @@ i#app-icon {
 }
 
 div#grid {
-    width: calc(100vh - 146px);
-    height: calc(100vh - 146px);
-    max-height: calc(100vw - 146px);
-    max-width: calc(100vw - 146px);
+    width: calc(100vh - 214px);
+    height: calc(100vh - 214px);
+    max-height: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
 }
 
 div#grid[cols="4"] > .card-component {
@@ -167,4 +192,12 @@ div#grid[cols="6"] > .card-component {
 
 div#grid[cols="8"] > .card-component {
     width: calc(100% / 8 - 16px);
+}
+
+.mdl-cell.stats {
+    max-width: calc(100%/3 - 16px);
+}
+
+.mdl-cell.stats > div:last-child {
+    font-weight: bold;
 }
