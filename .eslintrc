@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "eslint-config-es5"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "amd": true
+  },
+  "globals": {
+    "moment": false,
+    "requirejs": false,
+    "require": false,
+    "componentHandler": false,
+    "router": false,
+    "FB": false
+  },
+  "rules": {
+    "indent": [
+      2,
+      4
+    ],
+    "one-var": 0,
+    "func-names": [
+      0,
+      0
+    ],
+    "space-before-function-paren": "off"
+  }
+}

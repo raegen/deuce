@@ -19,14 +19,43 @@
     width: 50px;
 }
 
-i#app-icon {
+.mdl-layout__header-row {
+    position: relative;
+}
+
+#page-title {
+    margin: 0;
+}
+
+#logo {
     position: absolute;
     left: 0;
     top: 0;
-    height: 64px;
-    line-height: 64px;
+    height: 100%;
     width: 80px;
-    text-align: center;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 1024px) {
+    #logo {
+        width: 72px;
+    }
+}
+
+#view {
+    background-color: #f2f2f2;
+    overflow-y: auto;
 }
 
 .card-component {
@@ -45,9 +74,9 @@ i#app-icon {
     bottom: 0;
     right: 0;
     z-index: 30;
-    -moz-box-shadow: -5px 10px 5px rgba( 0, 0, 0, 0.3), 0 10px 0 10px white;
-    -webkit-box-shadow: -5px 10px 5px rgba( 0, 0, 0, 0.3), 0 10px 0 10px white;
-    box-shadow: -5px 10px 5px rgba( 0, 0, 0, 0.3), 0 10px 0 10px white;
+    -moz-box-shadow: -5px 10px 5px rgba(0, 0, 0, 0.3), 0 10px 0 10px white;
+    -webkit-box-shadow: -5px 10px 5px rgba(0, 0, 0, 0.3), 0 10px 0 10px white;
+    box-shadow: -5px 10px 5px rgba(0, 0, 0, 0.3), 0 10px 0 10px white;
     -webkit-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
     -moz-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
     -o-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
@@ -68,10 +97,10 @@ i#app-icon {
 .card-component:hover:after {
     width: 200%;
     height: 30px;
-    -webkit-transform: rotate(-2deg) translate3d( 0, 0, 0 );
-    -moz-transform: rotate(-2deg) translate3d( 0, 0, 0 );
-    -o-transform: rotate(-2deg) translate3d( 0, 0, 0 );
-    transform: rotate(-2deg) translate3d( 0, 0, 0 );
+    -webkit-transform: rotate(-2deg) translate3d(0, 0, 0);
+    -moz-transform: rotate(-2deg) translate3d(0, 0, 0);
+    -o-transform: rotate(-2deg) translate3d(0, 0, 0);
+    transform: rotate(-2deg) translate3d(0, 0, 0);
 }
 
 @keyframes flip-up {
@@ -131,10 +160,11 @@ i#app-icon {
     right: 1px;
     bottom: 2px;
     backface-visibility: hidden;
+    display: block;
 }
 
 .card-front {
-    background-color: #f2f2f2;
+    /*background-color: #f2f2f2;*/
     animation: flip-down .5s ease-in-out forwards;
 }
 
@@ -143,7 +173,7 @@ i#app-icon {
 }
 
 .card-symbol, .card-logo {
-    font-size: 3em;
+    font-size: 40px;;
     position: absolute;
     top: 0;
     left: 0;
@@ -154,14 +184,14 @@ i#app-icon {
 }
 
 .card-logo {
-    height: 1em;
-    width: 1em;
+    height: 40px;
+    width: 40px;
     color: #a3a3a3;
 }
 
 .card-symbol {
     height: 52px;
-    width: 50px;
+    width: 40px;
     line-height: 58px;
     color: #3f3f3f;
 }
@@ -175,29 +205,72 @@ i#app-icon {
     font-size: 0;
 }
 
-div#grid {
-    width: calc(100vh - 214px);
-    height: calc(100vh - 214px);
+#grid {
+    width: calc(100vh - 192px);
+    height: calc(100vh - 192px);
     max-height: calc(100vw - 16px);
     max-width: calc(100vw - 16px);
 }
 
-div#grid[cols="4"] > .card-component {
+#grid[cols="4"] > .card-component {
     width: calc(100% / 4 - 16px);
 }
 
-div#grid[cols="6"] > .card-component {
+#grid[cols="6"] > .card-component {
     width: calc(100% / 6 - 16px);
 }
 
-div#grid[cols="8"] > .card-component {
+#grid[cols="8"] > .card-component {
     width: calc(100% / 8 - 16px);
 }
 
 .mdl-cell.stats {
-    max-width: calc(100%/3 - 16px);
+    max-width: calc(100% / 3 - 16px);
 }
 
 .mdl-cell.stats > div:last-child {
     font-weight: bold;
+}
+
+#rank-list {
+    width: 100%;
+}
+
+#rank-list td:first-child {
+    width: 72px;
+    font-size: 18px;
+}
+
+.item-column > div:first-child {
+    padding-bottom: 8px;
+}
+
+.parent--fill {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.parent--contain {
+    max-height: calc(100% - 50px);
+}
+
+@media screen and (max-width: 768px) {
+    .parent--contain {
+        max-height: calc(100% - 16px);
+    }
+}
+
+#replay-link {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+
+#stats {
+    padding-bottom: 0;
+}
+
+#stats > div {
+    min-height: 0;
+    margin-bottom: 0;
 }

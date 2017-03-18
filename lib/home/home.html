@@ -1,0 +1,39 @@
+<div class="mdl-grid">
+    <form id="form" class="mdl-cell mdl-card mdl-shadow--2dp mdl-cell--12-col" action="" method="POST">
+        <div class="mdl-grid mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                <input class="mdl-textfield__input" type="text" name="username" id="username" required>
+                <label class="mdl-textfield__label" for="username">Username</label>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+                <div>
+                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="difficulty-16">
+                        <input type="radio" id="difficulty-16" class="mdl-radio__button"
+                               name="difficulty" value="16" checked>
+                        <span class="mdl-radio__label">Easy - 4x4</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="difficulty-36">
+                        <input type="radio" id="difficulty-36" class="mdl-radio__button"
+                               name="difficulty" value="36">
+                        <span class="mdl-radio__label">Normal - 6x6</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="difficulty-64">
+                        <input type="radio" id="difficulty-64" class="mdl-radio__button"
+                               name="difficulty" value="64">
+                        <span class="mdl-radio__label">Hard - 8x8</span>
+                    </label>
+                </div>
+            </div>
+            <div class="mdl-grid">
+                <button type="submit"
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+                    Play
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
