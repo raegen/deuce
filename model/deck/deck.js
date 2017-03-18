@@ -50,7 +50,7 @@ define(['config', 'card'], function(config, Card) {
         this.filter(filter).forEach(
             function(element) {
                 deck.push(this.splice(this.indexOf(element), 1));
-            }
+            }.bind(this)
         );
     };
 

@@ -5,7 +5,7 @@ define(['config'], function(config) {
                 if (object.hasOwnProperty(key)) {
                     this[key] = object[key];
                 }
-            }
+            }.bind(this)
         );
     }
 
@@ -31,13 +31,13 @@ define(['config'], function(config) {
             function(element) {
                 return record.difficulty === element.difficulty;
             }
-        ).slice(this.length - 10).splice().forEach(
+        ).slice(Math.max(0, this.length - 10)).splice().forEach(
             function(element) {
                 this.splice(this.indexOf(element), 1);
             }
         );
 
-        window.localStorage.setItem('memory_game', JSON.stringify(this));
+        window.localStorage.setItem(config.store.name, JSON.stringify(this));
 
         return record; // for consistency with Array.prototype.push
     };
