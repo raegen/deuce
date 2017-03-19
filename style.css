@@ -77,11 +77,16 @@
     -moz-box-shadow: -5px 10px 5px rgba(0, 0, 0, 0.3), 0 10px 0 10px white;
     -webkit-box-shadow: -5px 10px 5px rgba(0, 0, 0, 0.3), 0 10px 0 10px white;
     box-shadow: -5px 10px 5px rgba(0, 0, 0, 0.3), 0 10px 0 10px white;
-    -webkit-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
-    -moz-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
-    -o-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
-    transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
     cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .card-component:after {
+        -webkit-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
+        -moz-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
+        -o-transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
+        transition: .1s ease-in-out box-shadow, .1s ease-in-out transform;
+    }
 }
 
 .card-component.flipped {
@@ -202,8 +207,13 @@
 }
 
 .matched > .card-back > .card-symbol {
-    transition: font-size 1s ease-in-out;
     font-size: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .matched > .card-back > .card-symbol {
+        transition: font-size 1s ease-in-out;
+    }
 }
 
 #grid {
