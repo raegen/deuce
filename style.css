@@ -227,9 +227,16 @@
 }
 
 .card-logo {
-    height: 40px;
-    width: 40px;
     color: #a3a3a3;
+    width: 50%;
+    height: 50%;
+}
+
+#fingerprint {
+    fill: #a3a3a3;
+    vertical-align: top;
+    height: 100%;
+    width: 100%;
 }
 
 .card-symbol {
