@@ -1,5 +1,5 @@
 <div class="mdl-grid">
-    <form id="form" class="mdl-cell mdl-card mdl-shadow--2dp mdl-cell--12-col" action="" method="GET">
+    <form id="form" class="mdl-cell mdl-card mdl-shadow--2dp mdl-cell--12-col" onsubmit="var data = new FormData(this); this.setAttribute('action', '#play/' + data.get('username') + '/' + data.get('difficulty'))" action="" method="GET">
         <div class="mdl-grid mdl-cell--12-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
                 <input class="mdl-textfield__input" type="text" name="username" id="username" required>
