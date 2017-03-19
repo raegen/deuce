@@ -259,6 +259,9 @@
 }
 
 #stats > .mdl-card {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-orient: horizontal !important;
     -webkit-box-direction: normal !important;
     -ms-flex-direction: row !important;
@@ -285,7 +288,7 @@
 }
 
 .mdl-cell.stats {
-    max-width: calc(100% / 3 - 16px);
+    flex: 1 0 0;
 }
 
 .mdl-cell.stats > div:last-child {
