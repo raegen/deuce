@@ -257,6 +257,13 @@
     transition: font-size 1s ease-in-out;
 }
 
+#stats > .mdl-card {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
 #grid {
     width: calc(100vh - 192px);
     height: calc(100vh - 192px);
