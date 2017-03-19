@@ -1,8 +1,20 @@
-define(function() {
+define(function () {
     return {
+        rank: {
+            sort: function (a, b) {
+                return a.moves !== b.moves ? a.moves - b.moves : a.duration - b.duration;
+            }
+        },
         format: {
-            duration: function(value) {
+            duration: function (value) {
                 return moment.duration(value, 'seconds').format('hh:mm:ss', {trim: false});
+            }
+        },
+        integration: {
+            provider: {
+                facebook: {
+                    key: '1766244913704310'
+                }
             }
         },
         store: {name: 'deuce'},

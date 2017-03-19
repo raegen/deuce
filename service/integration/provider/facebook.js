@@ -1,6 +1,6 @@
-define(['facebookSDK'], function (facebookSDK) {
+define(['facebookSDK', 'config'], function (facebookSDK, config) {
     facebookSDK.init({
-        appId: '1766244913704310'
+        appId: config.integration.provider.facebook.key
     });
 
     return facebookSDK;
