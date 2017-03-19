@@ -216,7 +216,7 @@
 }
 
 .card-symbol, .card-logo {
-    font-size: 40px;;
+    font-size: 2em;
     position: absolute;
     top: 0;
     left: 0;
@@ -241,9 +241,9 @@
 }
 
 .card-symbol {
-    height: 52px;
+    height: 40px;
     width: 40px;
-    line-height: 58px;
+    line-height: 45px;
     color: #3f3f3f;
 }
 
