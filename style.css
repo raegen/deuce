@@ -227,9 +227,10 @@
 }
 
 .card-logo {
-    color: #a3a3a3;
     width: 50%;
     height: 50%;
+    background: url(assets/image/fingerprint.svg) 50% 50% no-repeat;
+    background-size: 100%;
 }
 
 #fingerprint {
@@ -258,10 +259,10 @@
 }
 
 #stats > .mdl-card {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: row !important;
+    flex-direction: row !important;
 }
 
 #grid {
