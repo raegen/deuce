@@ -13,7 +13,8 @@
     "require": false,
     "componentHandler": false,
     "router": false,
-    "FB": false
+    "FB": false,
+    "dialogPolyfill": false
   },
   "rules": {
     "indent": [
