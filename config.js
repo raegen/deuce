@@ -1,5 +1,6 @@
 define(function () {
     return {
+        click: (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) ? 'touchstart' : 'click',
         rank: {
             sort: function (a, b) {
                 return a.moves !== b.moves ? a.moves - b.moves : a.duration - b.duration;
