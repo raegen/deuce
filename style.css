@@ -241,8 +241,10 @@
 }
 
 .card-symbol {
-    width: 90%;
-    height: 90%;
+    padding: 5%;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .card-symbol > img {
@@ -288,6 +290,23 @@
 
 #grid[cols="8"] > .card-component {
     width: calc(100% / 8 - 16px);
+}
+
+@media screen and (max-width: 768px) {
+    #grid[cols="4"] > .card-component {
+        width: calc(100% / 4 - 4px);
+        margin: 2px;
+    }
+
+    #grid[cols="6"] > .card-component {
+        width: calc(100% / 6 - 4px);
+        margin: 2px;
+    }
+
+    #grid[cols="8"] > .card-component {
+        width: calc(100% / 8 - 4px);
+        margin: 2px;
+    }
 }
 
 .mdl-cell.stats {

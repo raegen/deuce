@@ -56,7 +56,15 @@ define(function () {
             28: 'assets/image/29.png',
             29: 'assets/image/30.png',
             30: 'assets/image/31.png',
-            31: 'assets/image/32.png'
+            31: 'assets/image/32.png',
+            32: 'assets/image/33.png',
+            33: 'assets/image/34.png',
+            34: 'assets/image/35.png',
+            35: 'assets/image/36.png',
+            36: 'assets/image/37.png',
+            37: 'assets/image/38.png',
+            38: 'assets/image/39.png',
+            39: 'assets/image/40.png'
         }
     };
 });
