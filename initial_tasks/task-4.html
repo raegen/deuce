@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 4</title>
+    <style>
+        .input {
+            position: relative;
+        }
+
+        input {
+            height: 40px;
+            width: 100%;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 200px;
+            box-sizing: border-box;
+        }
+
+        #multiply {
+            background: white;
+            border: 1px solid #c6c6c6;
+            height: 30px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .status {
+            color: red;
+            display: block;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            height: 20px;
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="input">
+    <input id="a" type="text" placeholder="[[11, 12, 13], [21, 22, 23], [31, 32, 33]]">
+    <label for="a" class="status"></label>
+</div>
+<div class="input">
+    <input id="b" type="text" placeholder="[[11, 12, 13], [21, 22, 23], [31, 32, 33]]">
+    <label for="b" class="status"></label>
+</div>
+<div class="input">
+    <label for="c" class="status"></label>
+    <button id="multiply">Multiply</button>
+</div>
+<input id="c" type="text" placeholder="Result" readonly>
+<script>
+    (function () {
+        var A, B, C, statusA, statusB, statusC, button;
+
+        function multiply(A, B) {
+            var result = [];
+
+            for (var i = 0; i < A.length; i++) {
+                result[i] = [];
+                for (var j = 0; j < B[0].length; j++) {
+                    var sum = 0;
+                    for (var k = 0; k < A[0].length; k++) {
+                        sum += A[i][k] * B[k][j];
+                    }
+                    result[i][j] = sum;
+                }
+            }
+            return result;
+        }
+
+        function isValid(A, B) {
+            var result = {
+                A: true,
+                B: true,
+                C: true
+            };
+
+            try {
+                A = JSON.parse(A);
+            } catch (e) {
+                result.A = false;
+            }
+
+            try {
+                B = JSON.parse(B);
+            } catch (e) {
+                result.B = false;
+            }
+
+            result.C = result.A && result.B && A.reduce(
+                    function (acc, curr) {
+                        return acc && curr.length === B.length
+                    }, true
+                );
+
+            return result;
+        }
+
+        function validate() {
+            var valid = isValid(A.value, B.value);
+
+            if (!valid.A) {
+                statusA.innerText = 'Must input a valid matrix.';
+                button.setAttribute('disabled', 'disabled');
+                return false;
+            } else {
+                statusA.innerText = '';
+            }
+
+            if (!valid.B) {
+                statusB.innerText = 'Must input a valid matrix.';
+                button.setAttribute('disabled', 'disabled');
+                return false;
+            } else {
+                statusB.innerText = '';
+            }
+
+            if (!valid.C) {
+                statusC.innerText = 'Number of columns of matrix A must equal the number of rows of matrix B.';
+                button.setAttribute('disabled', 'disabled');
+                return false;
+            } else {
+                statusC.innerText = '';
+            }
+
+            button.removeAttribute('disabled');
+            return true;
+        }
+
+        A = document.getElementById('a');
+        B = document.getElementById('b');
+        C = document.getElementById('c');
+
+        statusA = document.querySelector('label[for="a"]');
+        statusB = document.querySelector('label[for="b"]');
+        statusC = document.querySelector('label[for="c"]');
+
+        button = document.getElementById('multiply');
+
+        button.addEventListener('click', function () {
+            var result = multiply(JSON.parse(A.value), JSON.parse(B.value));
+
+            console.table(result);
+            C.value = JSON.stringify(result);
+        });
+
+        A.addEventListener('input', validate);
+
+        B.addEventListener('input', validate);
+    }());
+</script>
+</body>
+</html>

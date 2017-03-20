@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 3</title>
+    <style>
+        .search-result {
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 1px;
+        }
+    </style>
+</head>
+<body>
+<input type="text" placeholder="Search" autocomplete="off" id="search">
+
+<script>
+    (function () {
+        function Search(element, data) {
+            var container = document.createElement('div'),
+                results   = document.createElement('div');
+
+            function Result(country) {
+                this.element = document.createElement('div');
+
+                this.element.className = 'search-result';
+                this.element.innerText = country.label;
+
+                this.element.addEventListener('click', function () {
+                    alert(country.value);
+                })
+            }
+
+            container.className = 'input-container';
+            element.parentElement.insertBefore(container, element);
+            container.appendChild(element);
+
+            results.className = 'search-results';
+            container.appendChild(results);
+
+            element.addEventListener('input', function () {
+                var term = element.value.trim();
+
+                if (term) {
+                    results.innerHTML = '';
+
+                    data.forEach(
+                        function (country) {
+                            // filtering here to prevent looping twice
+                            if (country.label.indexOf(term) !== -1) {
+                                results.appendChild(new Result(country).element);
+                            }
+                        }
+                    )
+                }
+            });
+        }
+
+        xHttp = new XMLHttpRequest();
+        xHttp.onreadystatechange = function () {
+            var response;
+
+            if (this.readyState == 4 && this.status == 200) {
+                response = JSON.parse(xHttp.responseText);
+                new Search(document.getElementById('search'), Object.keys(response).map(
+                    function (key) {
+                        return {
+                            label: response[key],
+                            value: key
+                        }
+                    }
+                ));
+            }
+        };
+        xHttp.open('GET', 'https://gist.githubusercontent.com/mshafrir/2646763/raw/8b0dbb93521f5d6889502305335104218454c2bf/states_hash.json', true);
+        xHttp.send();
+    }());
+</script>
+</body>
+</html>

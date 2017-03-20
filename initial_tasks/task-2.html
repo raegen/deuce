@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 2</title>
+
+    <style>
+        #item-list {
+            width: 100%;
+        }
+
+        th, td {
+            padding: 5px 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<table id="item-list">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Url</th>
+        <th>Thumbnail</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    (function () {
+        var xHttp;
+
+        function render(data) {
+            var table = document.querySelector('#item-list > tbody');
+
+            data.forEach(
+                function (photo) {
+                    var row = document.createElement('tr'), cell, image;
+
+                    cell = document.createElement('td');
+                    cell.innerHTML = photo.title;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    cell.innerHTML = photo.url;
+                    row.appendChild(cell);
+
+                    cell = document.createElement('td');
+                    image = document.createElement('img');
+                    image.src = photo.thumbnailUrl;
+                    cell.appendChild(image);
+                    row.appendChild(cell);
+
+                    table.appendChild(row);
+                }
+            );
+        }
+
+        xHttp = new XMLHttpRequest();
+        xHttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                render(JSON.parse(xHttp.responseText));
+            }
+        };
+        xHttp.open('GET', 'http://jsonplaceholder.typicode.com/photos', true);
+        xHttp.send();
+    }())
+</script>
+</body>
+</html>

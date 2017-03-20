@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 1</title>
+    <style>
+        html, body, .container {
+            position: absolute;
+            margin: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .quadrant {
+            position: absolute;
+        }
+
+        .quadrant:nth-child(1) {
+            top: 0;
+            left: 0;
+            bottom: 50%;
+            right: 50%;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .quadrant:nth-child(2) {
+            top: 0;
+            left: 50%;
+            bottom: 50%;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .quadrant:nth-child(3) {
+            top: 50%;
+            left: 0;
+            bottom: 0;
+            right: 50%;
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        .quadrant:nth-child(4) {
+            top: 50%;
+            left: 50%;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 1);
+        }
+
+        #tracking-box {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="quadrant"></div>
+    <div class="quadrant"></div>
+    <div class="quadrant"></div>
+    <div class="quadrant"></div>
+</div>
+<div id="tracking-box"></div>
+
+<script>
+    (function () {
+        var box = document.getElementById('tracking-box');
+
+        document.addEventListener('mousemove', function (e) {
+            box.style.top = e.clientY + (e.clientY > window.innerHeight / 2 ? -70 : +20) + 'px';
+            box.style.left = e.clientX + (e.clientX > window.innerWidth / 2 ? -70 : +20) + 'px';
+        })
+    }())
+</script>
+</body>
+</html>
