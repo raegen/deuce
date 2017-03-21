@@ -36,16 +36,21 @@
         var box     = document.getElementById('box'),
             opacity = 1;
 
+        function changeOpacity(e) {
+            opacity += e.wheelDeltaY / 6000;
+            opacity = Math.min(1, Math.max(0, opacity));
+
+            box.style.opacity = opacity;
+
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
         box.addEventListener('click', function () {
             this.classList.toggle('rotate');
         });
 
-        document.addEventListener('wheel', function (e) {
-            opacity += e.wheelDeltaY / 12000;
-            opacity = Math.min(1, Math.max(0, opacity));
-
-            box.style.opacity = opacity;
-        });
+        document.addEventListener('onmousewheel' in document ? 'mousewheel' : 'wheel', changeOpacity, true);
     }())
 </script>
 </body>

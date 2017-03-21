@@ -17,8 +17,9 @@
 <script>
     (function () {
         function Search(element, data) {
-            var container = document.createElement('div'),
-                results   = document.createElement('div');
+            var container     = document.createElement('div'),
+                searchResults = document.createElement('div'),
+                results       = {};
 
             function Result(country) {
                 this.element = document.createElement('div');
@@ -31,36 +32,41 @@
                 })
             }
 
+            function search() {
+                var term = element.value.trim();
+
+                searchResults.innerHTML = '';
+
+                data.forEach(
+                    function (country) {
+                        // filtering here to prevent looping twice
+                        if (!term || country.label.indexOf(term) !== -1) {
+                            if (!results[country.value]) {
+                                results[country.value] = new Result(country);
+                            }
+
+                            searchResults.appendChild(results[country.value].element);
+                        }
+                    }
+                );
+            }
+
             container.className = 'input-container';
             element.parentElement.insertBefore(container, element);
             container.appendChild(element);
 
-            results.className = 'search-results';
-            container.appendChild(results);
+            searchResults.className = 'search-results';
+            container.appendChild(searchResults);
 
-            element.addEventListener('input', function () {
-                var term = element.value.trim();
-
-                if (term) {
-                    results.innerHTML = '';
-
-                    data.forEach(
-                        function (country) {
-                            // filtering here to prevent looping twice
-                            if (country.label.indexOf(term) !== -1) {
-                                results.appendChild(new Result(country).element);
-                            }
-                        }
-                    )
-                }
-            });
+            element.addEventListener('input', search);
+            search();
         }
 
         xHttp = new XMLHttpRequest();
         xHttp.onreadystatechange = function () {
             var response;
 
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 response = JSON.parse(xHttp.responseText);
                 new Search(document.getElementById('search'), Object.keys(response).map(
                     function (key) {
