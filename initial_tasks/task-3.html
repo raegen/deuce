@@ -33,14 +33,14 @@
             }
 
             function search() {
-                var term = element.value.trim();
+                var term = new RegExp(element.value.trim(), 'i');
 
                 searchResults.innerHTML = '';
 
                 data.forEach(
                     function (country) {
                         // filtering here to prevent looping twice
-                        if (!term || country.label.indexOf(term) !== -1) {
+                        if (term.test(country.label)) {
                             if (!results[country.value]) {
                                 results[country.value] = new Result(country);
                             }
